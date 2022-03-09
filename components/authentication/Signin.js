@@ -13,7 +13,7 @@ import {
 } from "native-base";
 import authStore from "../../stores/authStore";
 
-const Signin = () => {
+const Signin = ({ navigation }) => {
   const [user, setUser] = useState({ username: "", password: "" });
 
   const handleSubmit = () => {
@@ -48,7 +48,7 @@ const Signin = () => {
         <VStack space={3} mt="5">
           <FormControl>
             <FormControl.Label>
-              <Text>Email ID</Text>
+              <Text>Username</Text>
             </FormControl.Label>
             <Input
               placeholder="username"
@@ -77,7 +77,7 @@ const Signin = () => {
             </Link>
           </FormControl>
           <Button mt="2" colorScheme="indigo" onPress={handleSubmit}>
-            <Text> Sign in</Text>
+            <Text> Sign In</Text>
           </Button>
           <HStack mt="6" justifyContent="center">
             <Text
@@ -90,14 +90,20 @@ const Signin = () => {
               I'm a new user.{" "}
             </Text>
             <Link
-              _text={{
-                color: "indigo.500",
-                fontWeight: "medium",
-                fontSize: "sm",
+              onPress={() => {
+                navigation.navigate("Signup");
               }}
-              href="#"
             >
-              <Text> Sign Up</Text>
+              <Text
+                style={{
+                  color: "indigo",
+                  fontWeight: "bold",
+                  fontSize: "sm",
+                }}
+              >
+                {" "}
+                Sign Up
+              </Text>
             </Link>
           </HStack>
         </VStack>
