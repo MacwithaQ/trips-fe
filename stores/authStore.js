@@ -9,7 +9,7 @@ class AuthStore {
     makeAutoObservable(this);
   }
 
-  signup = async (userData) => {
+  signup = async (userData, navigation) => {
     try {
       console.log(userData);
       const res = await instance.post("/users/signup", userData);
@@ -17,14 +17,14 @@ class AuthStore {
       console.log(token);
       this.user = decode(token);
       await AsyncStorage.setItem("token", token);
-
       this.setUser(token);
+      navigation.navigate("Trip List");
     } catch (error) {
       console.log(error);
     }
   };
 
-  signin = async (userData) => {
+  signin = async (userData, navigation) => {
     console.log(userData);
     try {
       const res = await instance.post("/users/signin", userData);
@@ -32,8 +32,8 @@ class AuthStore {
       console.log(token);
       this.user = decode(token);
       await AsyncStorage.setItem("token", token);
-
       this.setUser(token);
+      navigation.navigate("Trip List");
     } catch (error) {
       console.log(error);
     }

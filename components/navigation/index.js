@@ -23,7 +23,11 @@ const RootNavigator = () => {
         component={Signin}
         options={{ headerShown: false }}
       />
-      <Screen name="Trip List" component={TripList} />
+      <Screen
+        name="Trip List"
+        component={TripList}
+        options={{ headerBackVisible: false }}
+      />
       <Screen name="Trip Detail" component={TripDetail} />
     </Navigator>
   );

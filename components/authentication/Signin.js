@@ -17,7 +17,7 @@ const Signin = ({ navigation }) => {
   const [user, setUser] = useState({ username: "", password: "" });
 
   const handleSubmit = () => {
-    authStore.signin(user);
+    authStore.signin(user, navigation);
   };
 
   return (
