@@ -1,21 +1,18 @@
 import { StyleSheet } from "react-native";
 import React from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-// import Home from "../Home";
-// import ShopList from "../shop/ShopList";
-// import CartList from "../cart/CartList";
-// import CartButton from "../cart/CartButton";
-// import ProductList from "../product/ProductList";
 
 import Signin from "../authentication/Signin";
 import Signup from "../authentication/Signup";
+import TripList from "../TripList";
+import TripDetail from "../TripDetail";
 import { View } from "native-base";
 
 const { Navigator, Screen } = createNativeStackNavigator();
 
 const RootNavigator = () => {
   return (
-    <Navigator initialRouteName="Signin">
+    <Navigator initialRouteName="Trip List">
       <Screen
         name="Signup"
         component={Signup}
@@ -26,6 +23,8 @@ const RootNavigator = () => {
         component={Signin}
         options={{ headerShown: false }}
       />
+      <Screen name="Trip List" component={TripList} />
+      <Screen name="Trip Detail" component={TripDetail} />
     </Navigator>
   );
 };
