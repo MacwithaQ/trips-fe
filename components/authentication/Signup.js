@@ -23,7 +23,7 @@ const Signup = ({ navigation }) => {
   });
 
   const handleSubmit = () => {
-    authStore.signup(user);
+    authStore.signup(user, navigation);
   };
 
   return (
