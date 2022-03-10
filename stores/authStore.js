@@ -38,6 +38,14 @@ class AuthStore {
       console.log(error);
     }
   };
+  signout = async () => {
+    try {
+      await AsyncStorage.removeItem("token");
+      this.user = null;
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   setUser = (token) => {
     this.user =

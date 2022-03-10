@@ -6,7 +6,10 @@ import Signin from "../authentication/Signin";
 import Signup from "../authentication/Signup";
 import TripList from "../TripList";
 import TripDetail from "../TripDetail";
+import TripCreate from "../TripCreate";
 import { View } from "native-base";
+import AddTripButton from "../buttons/AddTripButton";
+import SignOutButton from "../buttons/SignOutButton";
 
 const { Navigator, Screen } = createNativeStackNavigator();
 
@@ -26,8 +29,13 @@ const RootNavigator = () => {
       <Screen
         name="Trip List"
         component={TripList}
-        options={{ headerBackVisible: false }}
+        options={{
+          headerBackVisible: false,
+          headerRight: () => <AddTripButton />,
+          headerLeft: () => <SignOutButton />,
+        }}
       />
+      <Screen name="Trip Create" component={TripCreate} options={{}} />
       <Screen name="Trip Detail" component={TripDetail} />
     </Navigator>
   );
