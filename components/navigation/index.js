@@ -10,12 +10,13 @@ import TripCreate from "../TripCreate";
 import { View } from "native-base";
 import AddTripButton from "../buttons/AddTripButton";
 import SignOutButton from "../buttons/SignOutButton";
+import Profile from "../user/Profile";
 
 const { Navigator, Screen } = createNativeStackNavigator();
 
 const RootNavigator = () => {
   return (
-    <Navigator initialRouteName="Trip List">
+    <Navigator initialRouteName="Profile">
       <Screen
         name="Signup"
         component={Signup}
@@ -37,6 +38,11 @@ const RootNavigator = () => {
       />
       <Screen name="Trip Create" component={TripCreate} options={{}} />
       <Screen name="Trip Detail" component={TripDetail} />
+      <Screen
+        name="Profile"
+        component={Profile}
+        options={{ headerShown: false }}
+      />
     </Navigator>
   );
 };
