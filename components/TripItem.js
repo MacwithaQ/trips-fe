@@ -60,11 +60,6 @@ const TripItem = ({ trip }) => {
           {trip.title}
         </Heading>
         <Text isTruncated noOfLines={["4", "4", "4"]}>
-          {/* Bengaluru (also called Bangalore) is the center of India's high-tech
-          industry. It is located in southern India on the Deccan Plateau.The
-          city is also known for its parks and nightlife. Bangalore is the major
-          center of India's IT industry, popularly known as the Silicon Valley
-          of India. */}
           {trip.description}
         </Text>
       </Stack>
