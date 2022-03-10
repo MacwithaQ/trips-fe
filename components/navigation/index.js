@@ -7,12 +7,13 @@ import Signup from "../authentication/Signup";
 import TripList from "../TripList";
 import TripDetail from "../TripDetail";
 import { View } from "native-base";
+import Profile from "../user/Profile";
 
 const { Navigator, Screen } = createNativeStackNavigator();
 
 const RootNavigator = () => {
   return (
-    <Navigator initialRouteName="Trip List">
+    <Navigator initialRouteName="Profile">
       <Screen
         name="Signup"
         component={Signup}
@@ -25,6 +26,11 @@ const RootNavigator = () => {
       />
       <Screen name="Trip List" component={TripList} />
       <Screen name="Trip Detail" component={TripDetail} />
+      <Screen
+        name="Profile"
+        component={Profile}
+        options={{ headerShown: false }}
+      />
     </Navigator>
   );
 };
