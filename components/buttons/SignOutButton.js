@@ -10,10 +10,11 @@ const SignOutButton = () => {
   const handlePress = () => {
     if (authStore.user) {
       authStore.signOut();
+      navigation.navigate("Signin");
       Alert.alert("Signed Out");
     } else {
-      Alert.alert("You are not signed in");
-      navigation.navigate("Signin");
+      // Alert.alert("You are not signed in");
+      // navigation.navigate("Signin");
     }
   };
   return (
