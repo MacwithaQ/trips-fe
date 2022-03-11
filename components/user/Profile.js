@@ -8,8 +8,15 @@ import {
 } from "react-native";
 import React from "react";
 import { Ionicons, MaterialIcons } from "@expo/vector-icons";
+//import Profile details:
+import authStore from "../../stores/authStore";
+import { baseURL } from "../../stores/instance";
 
-const Profile = () => {
+const Profile = ({ route, navigation }) => {
+  const user = authStore.user;
+  const { profile } = route.params;
+  console.log(profile);
+
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -18,6 +25,7 @@ const Profile = () => {
             name="chevron-back-outline"
             size={24}
             color="#52575D"
+            onPress={() => navigation.navigate("Trip List")}
           ></Ionicons>
           <Ionicons
             name="ellipsis-vertical-outline"
@@ -28,7 +36,7 @@ const Profile = () => {
         <View style={{ alignSelf: "center" }}>
           <View style={styles.profileImage}>
             <Image
-              source={require("../../assets/profile-image-test.jpeg")}
+              source={{ uri: baseURL + profile.image }}
               style={styles.image}
               resizeMode="cover"
             ></Image>
@@ -43,16 +51,15 @@ const Profile = () => {
           </View>
         </View>
         <View style={styles.infoContainer}>
-          <Text style={[styles.text, { fontWeight: "200", fontSize: 36 }]}>
-            Aisha
-          </Text>
+          <Text
+            style={[styles.text, { fontWeight: "200", fontSize: 36 }]}
+          ></Text>
           <Text style={[styles.text, { color: "#AEB5BC", fontSize: 14 }]}>
-            Full Stack Developer
+            {user.username}
           </Text>
         </View>
-
         <View style={styles.aboutMeTitle}>
-          <Text style={[styles.subText, styles.recent]}>About me</Text>
+          <Text style={[styles.subText, styles.recent]}>About Me</Text>
           <View style={styles.dm}>
             <MaterialIcons
               onPress={() => alert("hello")}
@@ -71,10 +78,7 @@ const Profile = () => {
                   { color: "#41444B", fontWeight: "300", textAlign: "justify" },
                 ]}
               >
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-                enim ad minim veniam, quis nostrud exercitation ullamco laboris
-                nisi ut aliquip ex ea commodo consequat.
+                {profile.bio}
               </Text>
             </View>
           </View>

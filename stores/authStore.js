@@ -2,6 +2,7 @@ import decode from "jwt-decode";
 import { makeAutoObservable } from "mobx";
 import { instance } from "./instance";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import profileStore from "./profileStore";
 
 class AuthStore {
   user = null;
@@ -16,6 +17,7 @@ class AuthStore {
       const { token } = res.data;
       console.log(token);
       this.user = decode(token);
+      console.log(this.user);
       await AsyncStorage.setItem("token", token);
       this.setUser(token);
       navigation.navigate("Trip List");
@@ -31,6 +33,8 @@ class AuthStore {
       const { token } = res.data;
       console.log(token);
       this.user = decode(token);
+      console.log(this.user);
+
       await AsyncStorage.setItem("token", token);
       this.setUser(token);
       navigation.navigate("Trip List");
@@ -48,8 +52,7 @@ class AuthStore {
   };
 
   setUser = (token) => {
-    this.user =
-      instance.defaults.headers.common.Authorization = `Bearer ${token}`;
+    instance.defaults.headers.common.Authorization = `Bearer ${token}`;
   };
 
   checkForToken = async () => {
@@ -76,5 +79,5 @@ class AuthStore {
 }
 
 const authStore = new AuthStore();
-// authStore.checkForToken();
+authStore.checkForToken();
 export default authStore;
