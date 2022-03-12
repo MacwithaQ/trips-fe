@@ -16,6 +16,7 @@ import {
 import * as ImagePicker from "expo-image-picker";
 import tripsStore from "../stores/tripsStore";
 import { observer } from "mobx-react";
+import { instance } from "../stores/instance";
 
 const TripCreate = ({ navigation }) => {
   const [trip, setTrip] = useState({
@@ -39,6 +40,10 @@ const TripCreate = ({ navigation }) => {
     let uri = result.uri;
     if (!result.cancelled) {
       setImage({ uri, name: `photo.${fileType}`, type: `image/${fileType}` });
+      setTrip({
+        ...trip,
+        image: { uri, name: `photo.${fileType}`, type: `image/${fileType}` },
+      });
     }
   };
   // -----------------

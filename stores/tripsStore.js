@@ -19,9 +19,20 @@ class TripsStore {
 
   addTrip = async (trip, navigation) => {
     try {
-      const res = await instance.post(`/trips`, trip);
+      const formData = new FormData();
+      for (const key in trip) {
+        console.log({ key, value: trip[key] });
+        formData.append(key, trip[key]);
+      }
+      const res = await instance.post(`/trips`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+        transformRequest: (data, headers) => {
+          return formData; // this is doing the trick
+        },
+      });
       this.trips = [...this.trips, res.data];
-      console.log(this.trips);
       navigation.navigate("Trip List");
     } catch (error) {
       console.log(error);
