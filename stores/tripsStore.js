@@ -16,6 +16,17 @@ class TripsStore {
       console.log("TripsStore -> fetchTrips -> error", error);
     }
   };
+
+  addTrip = async (trip, navigation) => {
+    try {
+      const res = await instance.post(`/trips`, trip);
+      this.trips = [...this.trips, res.data];
+      console.log(this.trips);
+      navigation.navigate("Trip List");
+    } catch (error) {
+      console.log(error);
+    }
+  };
 }
 
 const tripsStore = new TripsStore();

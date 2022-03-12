@@ -38,6 +38,7 @@ class AuthStore {
       console.log(error);
     }
   };
+
   signout = async () => {
     try {
       await AsyncStorage.removeItem("token");
