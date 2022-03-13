@@ -1,4 +1,4 @@
-import { StyleSheet } from "react-native";
+import { Pressable, StyleSheet } from "react-native";
 import React from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
@@ -11,20 +11,23 @@ import { View } from "native-base";
 import AddTripButton from "../buttons/AddTripButton";
 import SignOutButton from "../buttons/SignOutButton";
 import Profile from "../user/Profile";
+import ProfileAvatarButton from "../buttons/ProfileAvatarButton";
+import { NavigationContainer } from "@react-navigation/native";
 
 const { Navigator, Screen } = createNativeStackNavigator();
 
 const RootNavigator = () => {
   return (
     <Navigator initialRouteName="Trip List">
-      <Screen
-        name="Signup"
-        component={Signup}
-        options={{ headerShown: false }}
-      />
+    <Navigator>
       <Screen
         name="Signin"
         component={Signin}
+        options={{ headerShown: false }}
+      />
+      <Screen
+        name="Signup"
+        component={Signup}
         options={{ headerShown: false }}
       />
       <Screen
@@ -33,7 +36,9 @@ const RootNavigator = () => {
         options={{
           headerBackVisible: false,
           headerRight: () => <AddTripButton />,
+          headerRight: () => <ProfileAvatarButton />,
           headerLeft: () => <SignOutButton />,
+          headerTitle: "Upcoming Trips",
         }}
       />
       <Screen name="Trip Create" component={TripCreate} options={{}} />

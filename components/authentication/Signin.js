@@ -52,6 +52,7 @@ const Signin = ({ navigation }) => {
             </FormControl.Label>
             <Input
               placeholder="username"
+              autoCapitalize="none"
               onChangeText={(username) => setUser({ ...user, username })}
             />
           </FormControl>
@@ -77,7 +78,7 @@ const Signin = ({ navigation }) => {
             </Link>
           </FormControl>
           <Button mt="2" colorScheme="indigo" onPress={handleSubmit}>
-            <Text> Sign In</Text>
+            <Text style={{ color: "white" }}> Sign In</Text>
           </Button>
           <HStack mt="6" justifyContent="center">
             <Text
