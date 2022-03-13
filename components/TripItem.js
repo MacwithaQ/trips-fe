@@ -9,8 +9,11 @@ import {
   Image,
   Stack,
 } from "native-base";
+import profileStore from "../stores/profileStore";
 
 const TripItem = ({ trip }) => {
+  console.log("TRIP", trip);
+  console.log("ORGANIZER", baseURL + "/" + trip.profile.image);
   return (
     <Box
       shadow="2"
@@ -21,15 +24,9 @@ const TripItem = ({ trip }) => {
       m="3"
     >
       <AspectRatio w="100%" ratio={1}>
-        <Image
-          source={{
-            uri: baseURL + trip.image,
-          }}
-          alt="image base"
-          roundedTop="lg"
-        />
+        <Image source={{ uri: baseURL + trip.image }} roundedTop="lg" />
       </AspectRatio>
-      <Text
+      {/* <Text
         bold
         position="absolute"
         color="coolGray.50"
@@ -41,14 +38,12 @@ const TripItem = ({ trip }) => {
       </Text>
       <Text position="absolute" color="coolGray.50" top="7" right="20" m="4">
         Placeholder
-      </Text>
+      </Text> */}
       <Image
         size={65}
         resizeMode={"cover"}
         borderRadius={100}
-        source={{
-          uri: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8d29tYW4lMjBwcm9maWxlfGVufDB8fDB8fA%3D%3D&w=1000&q=80",
-        }}
+        source={{ uri: baseURL + "/" + trip.profile.image }}
         alt="Alternate Text"
         top="-1"
         right="0.1"
@@ -64,12 +59,12 @@ const TripItem = ({ trip }) => {
         </Text>
       </Stack>
       <HStack space="3" px="4" pb="4">
-        <Text
+        {/* <Text
           _light={{ color: "emerald.800" }}
           _dark={{ color: "emerald.300" }}
         >
           Find out more
-        </Text>
+        </Text> */}
       </HStack>
     </Box>
   );

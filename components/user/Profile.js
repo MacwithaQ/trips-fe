@@ -11,11 +11,26 @@ import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 //import Profile details:
 import authStore from "../../stores/authStore";
 import { baseURL } from "../../stores/instance";
+import tripsStore from "../../stores/tripsStore";
+import { observer } from "mobx-react-lite";
 
 const Profile = ({ route, navigation }) => {
   const user = authStore.user;
-  const { profile } = route.params;
+  const profile = route.params.profile;
   console.log(profile);
+
+  const userTrips = tripsStore.trips
+    .filter((trip) => trip.organizer === user._id)
+    .map((trip) => (
+      <View style={styles.mediaImageContainer}>
+        <Image
+          source={{ uri: baseURL + trip.image }}
+          style={[styles.image, styles.tripImage]}
+          resizeMode="cover"
+        ></Image>
+        <Text style={styles.imageText}>{trip.title}</Text>
+      </View>
+    ));
 
   return (
     <SafeAreaView style={styles.container}>
@@ -36,7 +51,7 @@ const Profile = ({ route, navigation }) => {
         <View style={{ alignSelf: "center" }}>
           <View style={styles.profileImage}>
             <Image
-              source={{ uri: baseURL + profile.image }}
+              source={{ uri: baseURL + "/" + profile.image }}
               style={styles.image}
               resizeMode="cover"
             ></Image>
@@ -47,12 +62,16 @@ const Profile = ({ route, navigation }) => {
               size={48}
               color="#DFD8C8"
               style={{ marginTop: 6, marginLeft: 2 }}
+              onPress={() => alert("choose an image")}
             ></Ionicons>
           </View>
         </View>
         <View style={styles.infoContainer}>
+          <Text style={[styles.text, { fontWeight: "200", fontSize: 36 }]}>
+            {user.firstName + " " + user.lastName}
+          </Text>
           <Text
-            style={[styles.text, { fontWeight: "200", fontSize: 36 }]}
+            style={[styles.text, { color: "#AEB5BC", fontSize: 14 }]}
           ></Text>
           <Text style={[styles.text, { color: "#AEB5BC", fontSize: 14 }]}>
             {user.username}
@@ -86,14 +105,7 @@ const Profile = ({ route, navigation }) => {
         <Text style={[styles.subText, styles.recent]}>My Trips</Text>
         <View style={{ marginTop: 10 }}>
           <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-            <View style={styles.mediaImageContainer}>
-              <Image
-                source={require("../../assets/trip-image-demo.jpeg")}
-                style={[styles.image, styles.tripImage]}
-                resizeMode="cover"
-              ></Image>
-              <Text style={styles.imageText}>The Maldives</Text>
-            </View>
+            {userTrips}
           </ScrollView>
         </View>
       </ScrollView>
@@ -101,7 +113,7 @@ const Profile = ({ route, navigation }) => {
   );
 };
 
-export default Profile;
+export default observer(Profile);
 
 const styles = StyleSheet.create({
   container: {
@@ -175,8 +187,8 @@ const styles = StyleSheet.create({
   },
   image: {
     flex: 1,
-    width: "undefined",
-    height: "undefined",
+    width: 200,
+    height: 200,
   },
   tripImage: {
     position: "absolute",
@@ -192,7 +204,7 @@ const styles = StyleSheet.create({
     height: "20%",
     paddingTop: 4,
     color: "black",
-    backgroundColor: "rgba(255,255,255,0.3), transparent",
+    backgroundColor: "rgba(255,255,255,0.6), transparent",
   },
   recent: {
     flexDirection: "row",
