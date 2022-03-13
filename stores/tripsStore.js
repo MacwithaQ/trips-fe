@@ -41,7 +41,5 @@ class TripsStore {
 }
 
 const tripsStore = new TripsStore();
-
 tripsStore.fetchTrips();
-
 export default tripsStore;

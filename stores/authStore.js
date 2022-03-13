@@ -3,6 +3,7 @@ import { makeAutoObservable } from "mobx";
 import { instance } from "./instance";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import profileStore from "./profileStore";
+import { Alert } from "react-native";
 
 class AuthStore {
   user = null;
@@ -31,15 +32,14 @@ class AuthStore {
     try {
       const res = await instance.post("/users/signin", userData);
       const { token } = res.data;
-      console.log(token);
-      this.user = decode(token);
-      console.log(this.user);
-
-      await AsyncStorage.setItem("token", token);
-      this.setUser(token);
+      await this.setUser(token);
       navigation.navigate("Trip List");
     } catch (error) {
-      console.log(error);
+      // Alert.alert(
+      //   "Authentication failed",
+      //   "username or password is incorrect",
+      //   [{ text: "OK", onPress: () => console.log("OK Pressed") }]
+      // );
     }
   };
 
@@ -52,20 +52,28 @@ class AuthStore {
     }
   };
 
-  setUser = (token) => {
-    instance.defaults.headers.common.Authorization = `Bearer ${token}`;
+  setUser = async (token) => {
+    try {
+      const decodedtoken = decode(token);
+      this.user = decodedtoken;
+      instance.defaults.headers.common.Authorization = `Bearer ${token}`;
+      await AsyncStorage.setItem("token", token);
+    } catch (error) {}
   };
 
   checkForToken = async () => {
-    const token = await AsyncStorage.getItem("token");
-    if (token) {
-      const decodedToken = decode(token);
-      if (Date.now() < decodedToken.exp) {
-        this.user = decodedToken;
-      } else {
-        this.user = null;
-        await AsyncStorage.removeItem("token");
+    try {
+      const token = await AsyncStorage.getItem("token");
+      if (token) {
+        const decodedToken = decode(token);
+        if (Date.now() < +decodedToken.exp) {
+          await this.setUser(token);
+        } else {
+          this.signOut();
+        }
       }
+    } catch (error) {
+      console.log(error);
     }
   };
 
