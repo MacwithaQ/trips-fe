@@ -32,7 +32,7 @@ export default observer(AddTripButton);
 
 const styles = StyleSheet.create({
   button: {
-    margin: 9,
-    marginRight: 30,
+    margin: 8,
+    marginRight: 10,
   },
 });

@@ -13,13 +13,13 @@ import SignOutButton from "../buttons/SignOutButton";
 import Profile from "../user/Profile";
 import ProfileAvatarButton from "../buttons/ProfileAvatarButton";
 import { NavigationContainer } from "@react-navigation/native";
+import Buttons from "../buttons/Buttons";
 
 const { Navigator, Screen } = createNativeStackNavigator();
 
 const RootNavigator = () => {
   return (
     <Navigator initialRouteName="Trip List">
-    <Navigator>
       <Screen
         name="Signin"
         component={Signin}
@@ -36,7 +36,7 @@ const RootNavigator = () => {
         options={{
           headerBackVisible: false,
           headerRight: () => <AddTripButton />,
-          headerRight: () => <ProfileAvatarButton />,
+          headerRight: () => <Buttons />,
           headerLeft: () => <SignOutButton />,
           headerTitle: "Upcoming Trips",
         }}
