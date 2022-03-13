@@ -1,5 +1,5 @@
 import { Avatar, HStack } from "native-base";
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import { Alert, Pressable, StyleSheet, Text, View } from "react-native";
 import React from "react";
 import authStore from "../../stores/authStore";
 import { useNavigation } from "@react-navigation/native";
@@ -23,6 +23,7 @@ const ProfileAvatarButton = () => {
       <Pressable onPress={handlePress}>
         <Avatar
           bg="cyan.500"
+          mt={1}
           width={30}
           height={30}
           // source={{ uri: baseURL + "/" + profileStore.profile.image }}
