@@ -18,6 +18,7 @@ const { Navigator, Screen } = createNativeStackNavigator();
 
 const RootNavigator = () => {
   return (
+    <Navigator initialRouteName="Trip List">
     <Navigator>
       <Screen
         name="Signin"
