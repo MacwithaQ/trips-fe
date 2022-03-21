@@ -56,6 +56,7 @@ const Signup = ({ navigation }) => {
             <Input
               placeholder="username"
               onChangeText={(username) => setUser({ ...user, username })}
+              autoCapitalize="none"
             />
           </FormControl>
           <FormControl>

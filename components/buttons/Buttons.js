@@ -4,6 +4,7 @@ import React from "react";
 import AddTripButton from "./AddTripButton";
 import Profile from "../user/Profile";
 import ProfileAvatarButton from "./ProfileAvatarButton";
+import { observer } from "mobx-react";
 
 const Buttons = () => {
   return (
@@ -14,6 +15,6 @@ const Buttons = () => {
   );
 };
 
-export default Buttons;
+export default observer(Buttons);
 
 const styles = StyleSheet.create({});

@@ -16,9 +16,28 @@ class ProfileStore {
     try {
       const response = await instance.get("/profiles");
       this.profiles = response.data;
-      console.log("🎉🎉🎉", this.profiles);
     } catch (error) {
       console.log("profileStore -> fetchProfiles -> error", error);
+    }
+  };
+
+  uploadProfileImage = async (profile) => {
+    try {
+      const formData = new FormData();
+      for (const key in profile) {
+        formData.append(key, profile[key]);
+      }
+      const res = await instance.put(`/profiles/${profile._id}`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+        transformRequest: (data, headers) => {
+          return formData; // this is doing the trick
+        },
+      });
+      this.profile = [...this.profile, res.data];
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -26,10 +45,11 @@ class ProfileStore {
     try {
       const response = await instance.get(`/profiles/${user._id}`);
       this.profile = response.data;
-      navigation.navigate("Profile", {
-        profile: this.profile,
-      });
-      console.log("🎉🎉🎉", this.profile);
+      if (navigation) {
+        navigation.navigate("Profile", {
+          profile: this.profile,
+        });
+      }
     } catch (error) {
       console.log("profileStore -> fetchSingleProfile -> error", error);
     }

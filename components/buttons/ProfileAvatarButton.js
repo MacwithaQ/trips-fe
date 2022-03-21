@@ -5,10 +5,11 @@ import authStore from "../../stores/authStore";
 import { useNavigation } from "@react-navigation/native";
 import profileStore from "../../stores/profileStore";
 import { baseURL } from "../../stores/instance";
+import { observer } from "mobx-react";
 
 const ProfileAvatarButton = () => {
   const navigation = useNavigation();
-  // const profile = profileStore.profile;
+  const profile = profileStore.profile;
   const handlePress = () => {
     if (authStore.user) {
       profileStore.fetchSingleProfile(authStore.user, navigation);
@@ -21,18 +22,27 @@ const ProfileAvatarButton = () => {
   return (
     <HStack>
       <Pressable onPress={handlePress}>
-        <Avatar
-          bg="cyan.500"
-          mt={1}
-          width={30}
-          height={30}
-          // source={{ uri: baseURL + "/" + profileStore.profile.image }}
-        ></Avatar>
+        {profile ? (
+          <Avatar
+            bg="cyan.500"
+            mt={1}
+            width={30}
+            height={30}
+            source={{ uri: baseURL + profile.image }}
+          ></Avatar>
+        ) : (
+          <Avatar
+            bg="cyan.500"
+            mt={1}
+            width={30}
+            height={30}
+            // source={{ uri: baseURL + profile.image }}
+          ></Avatar>
+        )}
       </Pressable>
     </HStack>
   );
 };
 
 export default ProfileAvatarButton;
-
 const styles = StyleSheet.create({});
