@@ -28,11 +28,12 @@ class AuthStore {
   };
 
   signin = async (userData, navigation) => {
-    console.log(userData);
     try {
       const res = await instance.post("/users/signin", userData);
       const { token } = res.data;
       await this.setUser(token);
+      console.log(this.user._id);
+      profileStore.fetchSingleProfile(this.user._id);
       navigation.navigate("Trip List");
     } catch (error) {
       // Alert.alert(

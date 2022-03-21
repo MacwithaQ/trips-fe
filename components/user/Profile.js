@@ -7,17 +7,19 @@ import {
   ScrollView,
 } from "react-native";
 import React from "react";
+import { useState } from "react";
 import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 //import Profile details:
 import authStore from "../../stores/authStore";
 import { baseURL } from "../../stores/instance";
 import tripsStore from "../../stores/tripsStore";
-import { observer } from "mobx-react-lite";
+import { observer } from "mobx-react";
+import * as ImagePicker from "expo-image-picker";
+import profileStore from "../../stores/profileStore";
 
 const Profile = ({ route, navigation }) => {
   const user = authStore.user;
   const profile = route.params.profile;
-  console.log(profile);
 
   const userTrips = tripsStore.trips
     .filter((trip) => trip.organizer === user._id)
@@ -31,6 +33,34 @@ const Profile = ({ route, navigation }) => {
         <Text style={styles.imageText}>{trip.title}</Text>
       </View>
     ));
+
+  const [image, setImage] = useState(null);
+
+  const pickImage = async (image) => {
+    // No permissions request is necessary for launching the image library
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+    let uriParts = result.uri.split(".");
+    let fileType = uriParts[uriParts.length - 1];
+    let uri = result.uri;
+    if (!result.cancelled) {
+      setImage({
+        uri,
+        name: `photo.${fileType}`,
+        type: `image/${fileType}`,
+      });
+      profile.image = {
+        uri,
+        name: `photo.${fileType}`,
+        type: `image/${fileType}`,
+      };
+      profileStore.uploadProfileImage(profile);
+    }
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -50,11 +80,19 @@ const Profile = ({ route, navigation }) => {
         </View>
         <View style={{ alignSelf: "center" }}>
           <View style={styles.profileImage}>
-            <Image
-              source={{ uri: baseURL + "/" + profile.image }}
-              style={styles.image}
-              resizeMode="cover"
-            ></Image>
+            {!image ? (
+              <Image
+                source={{ uri: baseURL + profile.image }}
+                style={styles.image}
+                resizeMode="cover"
+              ></Image>
+            ) : (
+              <Image
+                source={{ uri: image.uri }}
+                style={styles.image}
+                resizeMode="cover"
+              ></Image>
+            )}
           </View>
           <View style={styles.add}>
             <Ionicons
@@ -62,7 +100,7 @@ const Profile = ({ route, navigation }) => {
               size={48}
               color="#DFD8C8"
               style={{ marginTop: 6, marginLeft: 2 }}
-              onPress={() => alert("choose an image")}
+              onPress={() => pickImage()}
             ></Ionicons>
           </View>
         </View>

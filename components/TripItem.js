@@ -12,8 +12,7 @@ import {
 import profileStore from "../stores/profileStore";
 
 const TripItem = ({ trip }) => {
-  console.log("TRIP", trip);
-  console.log("ORGANIZER", baseURL + "/" + trip.profile.image);
+  console.log(baseURL + "/" + trip.profile.image);
   return (
     <Box
       shadow="2"
